@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { signUp } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
 
 export default function SignUp() {
     const [showConfirm, setShowConfirm] = useState(false);
     const [error, setError] = useState("");
 
-    const handleSignup = (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const user = Object.fromEntries(formData.entries())
@@ -20,6 +22,22 @@ export default function SignUp() {
 
 
         // console.log(user)
+        const { data, error } = await signUp.email({
+            name: user.name,// required
+            email: user.email, // required
+            password: user.password, // required
+            image: user.photo,
+        });
+
+        console.log(error)
+
+        if(data){
+            redirect("/")
+            alert(`${user.name} is successfully resister`)
+        }
+        if(error){
+            alert(`${error.statusText}`)
+        }
 
 
     };
@@ -29,7 +47,7 @@ export default function SignUp() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-black px-4">
+        <div className="min-h-screen flex items-center justify-center bg-black px-2">
             <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
 
                 {/* Title */}
@@ -41,7 +59,7 @@ export default function SignUp() {
                 </p>
 
                 {/* Form */}
-                <form onSubmit={handleSignup} className="mt-4 space-y-2">
+                <form onSubmit={handleSignup} className="mt-2 space-y-1">
 
                     {/* Name */}
                     <div>
@@ -62,6 +80,18 @@ export default function SignUp() {
                             type="email"
                             placeholder="Enter your email"
                             name="email"
+                            className="w-full mt-1 px-4 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-400"
+                            required
+                        />
+                    </div>
+
+                    {/* photo */}
+                    <div>
+                        <label className="text-sm text-gray-600">Photo</label>
+                        <input
+                            type="text"
+                            placeholder="Enter your photo url"
+                            name="photo"
                             className="w-full mt-1 px-4 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-400"
                             required
                         />

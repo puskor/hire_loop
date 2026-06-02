@@ -3,9 +3,18 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import { authClient, useSession } from "@/lib/auth-client";
 
 export default function Navbar() {
     const [open, setOpen] = useState(false);
+
+    const { data: session } = useSession()
+
+    const handelLogout = async () => {
+        await authClient.signOut();
+    }
+
+
 
     return (
         <nav className="w-full fixed top-0 left-0 z-50 px-4 md:px-8 py-4 backdrop-blur-3xl bg-black/30">
@@ -48,12 +57,18 @@ export default function Navbar() {
 
                     <div className="w-px h-6 bg-white/20" />
 
-                    <a
-                        href="/login"
-                        className="text-indigo-400 hover:text-indigo-300 transition font-medium"
-                    >
-                        Sign In
-                    </a>
+                    {
+                        session ? <button onClick={handelLogout} className="text-red-500 hover:text-indigo-300 transition font-medium">
+                            logout
+                        </button> :
+                            <a
+                                href="/login"
+                                className="text-indigo-400 hover:text-indigo-300 transition font-medium"
+                            >
+                                Sign In
+                            </a>
+                    }
+
 
                     <button className="bg-white text-black px-6 py-3 rounded-2xl font-medium hover:scale-105 transition">
                         Get Started

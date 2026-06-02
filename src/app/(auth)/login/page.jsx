@@ -2,16 +2,31 @@
 
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { redirect } from "next/navigation";
+import { signIn } from "@/lib/auth-client";
 
 export default function Login() {
 
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleLogin = (e) => {
+    const handleLogin = async(e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget)
         const user = Object.fromEntries(formData.entries())
         // console.log(user)
+
+        const { data, error } = await signIn.email({
+            email: user.email, // required
+            password: user.password, // required
+        });
+
+        if(data){
+            redirect("/")
+            alert("successfully signin")
+        }
+        if(error){
+            alert(`${error}`)
+        }
     };
 
     return (
