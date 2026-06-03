@@ -18,10 +18,11 @@ export default function Login() {
         const { data, error } = await signIn.email({
             email: user.email, // required
             password: user.password, // required
+            callbackURL:"/"
         });
 
         if(data){
-            redirect("/")
+            // redirect("/")
             alert("successfully signin")
         }
         if(error){

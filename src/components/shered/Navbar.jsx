@@ -10,6 +10,8 @@ export default function Navbar() {
 
     const { data: session } = useSession()
 
+    // console.log(session, "13")
+
     const handelLogout = async () => {
         await authClient.signOut();
     }
@@ -58,9 +60,12 @@ export default function Navbar() {
                     <div className="w-px h-6 bg-white/20" />
 
                     {
-                        session ? <button onClick={handelLogout} className="text-red-500 hover:text-indigo-300 transition font-medium">
-                            logout
-                        </button> :
+                        session ? <div className="flex gap-3 text-white">
+                            <h1>Hi,{session.user.name}</h1>
+                            <button onClick={handelLogout} className="btn  text-red-500 hover:text-indigo-300 transition font-medium">
+                                logout
+                            </button>
+                        </div> :
                             <a
                                 href="/login"
                                 className="text-indigo-400 hover:text-indigo-300 transition font-medium"
@@ -87,6 +92,8 @@ export default function Navbar() {
             {/* Mobile Menu */}
             {open && (
                 <div className="md:hidden mt-4 mx-4 bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 space-y-5">
+                    <h1 className="block text-blue-400 hover:text-blue-600 font-bold transition">{session?.user?.name}</h1>
+
                     <a
                         href="/"
                         className="block text-gray-300 hover:text-white transition"
@@ -108,13 +115,19 @@ export default function Navbar() {
                         Pricing
                     </a>
 
-                    <a
-                        href="login"
-                        className="block text-indigo-400 font-medium"
-                    >
-                        Sign In
-                    </a>
-
+                    {
+                        session ? <div className="flex gap-3 text-white">
+                            <button onClick={handelLogout} className="btn  text-red-500 hover:text-indigo-300 transition font-medium">
+                                logout
+                            </button>
+                        </div> :
+                            <a
+                                href="/login"
+                                className="text-indigo-400 hover:text-indigo-300 transition font-medium"
+                            >
+                                Sign In
+                            </a>
+                    }
                     <button className="w-full bg-white text-black py-3 rounded-xl font-medium">
                         Get Started
                     </button>
