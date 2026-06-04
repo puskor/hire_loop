@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { signUp } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
+import { Description, Label, Radio, RadioGroup } from "@heroui/react";
+
 
 export default function SignUp() {
     const [showConfirm, setShowConfirm] = useState(false);
@@ -19,23 +21,22 @@ export default function SignUp() {
             return;
         }
         setError("");
-
-
         // console.log(user)
         const { data, error } = await signUp.email({
             name: user.name,// required
             email: user.email, // required
             password: user.password, // required
             image: user.photo,
+            role:user.role
         });
 
-        console.log(error)
+        // console.log(error)
 
-        if(data){
+        if (data) {
             redirect("/")
             alert(`${user.name} is successfully resister`)
         }
-        if(error){
+        if (error) {
             alert(`${error.statusText}`)
         }
 
@@ -68,7 +69,7 @@ export default function SignUp() {
                             type="text"
                             placeholder="Enter your name"
                             name="name"
-                            className="w-full mt-1 px-4 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-400"
+                            className="w-full mt-1 px-4  border rounded-xl outline-none focus:ring-2 focus:ring-indigo-400"
                             required
                         />
                     </div>
@@ -80,7 +81,7 @@ export default function SignUp() {
                             type="email"
                             placeholder="Enter your email"
                             name="email"
-                            className="w-full mt-1 px-4 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-400"
+                            className="w-full mt-1 px-4  border rounded-xl outline-none focus:ring-2 focus:ring-indigo-400"
                             required
                         />
                     </div>
@@ -92,7 +93,7 @@ export default function SignUp() {
                             type="text"
                             placeholder="Enter your photo url"
                             name="photo"
-                            className="w-full mt-1 px-4 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-400"
+                            className="w-full mt-1 px-4  border rounded-xl outline-none focus:ring-2 focus:ring-indigo-400"
                             required
                         />
                     </div>
@@ -104,7 +105,7 @@ export default function SignUp() {
                             type="password"
                             placeholder="Enter password"
                             name="password"
-                            className="w-full mt-1 px-4 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-400"
+                            className="w-full mt-1 px-4  border rounded-xl outline-none focus:ring-2 focus:ring-indigo-400"
                             required
                         />
                     </div>
@@ -120,18 +121,39 @@ export default function SignUp() {
                                 type={showConfirm ? "text" : "password"}
                                 placeholder="Confirm password"
                                 name="confirmPassword"
-                                className="w-full px-4 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-400"
+                                className="w-full px-4  border rounded-xl outline-none focus:ring-2 focus:ring-indigo-400"
                                 required
                             />
 
                             <button
                                 type="button"
                                 onClick={() => setShowConfirm(!showConfirm)}
-                                className="absolute right-3 top-3 text-gray-500"
+                                className="absolute right-3 top-1 text-gray-500"
                             >
                                 {showConfirm ? <EyeOff size={20} /> : <Eye size={20} />}
                             </button>
                         </div>
+                    </div>
+                    <div className="flex flex-col ">
+                        <Label className="text-gray-500">Role</Label>
+                        <RadioGroup defaultValue="seeker" name="role" orientation="horizontal">
+                            <Radio value="seeker">
+                                <Radio.Control>
+                                    <Radio.Indicator />
+                                </Radio.Control>
+                                <Radio.Content>
+                                    <Label>Seeker</Label>
+                                </Radio.Content>
+                            </Radio>
+                            <Radio value="recruiter">
+                                <Radio.Control>
+                                    <Radio.Indicator />
+                                </Radio.Control>
+                                <Radio.Content>
+                                    <Label>Recruiter</Label>
+                                </Radio.Content>
+                            </Radio>
+                        </RadioGroup>
                     </div>
 
                     {/* Error */}
@@ -173,7 +195,7 @@ export default function SignUp() {
                 </form>
 
                 {/* Login Link */}
-                <p className="text-center text-sm text-gray-500 mt-6">
+                <p className="text-center text-sm text-gray-500 mt-3">
                     Already have an account?{" "}
                     <a
                         href="/login"
