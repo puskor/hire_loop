@@ -4,7 +4,9 @@ import {
     Briefcase,
     FileText,
     Settings,
+    SquareChevronRight,
 } from "lucide-react";
+import { Button, Drawer } from "@heroui/react";
 
 const menuItems = [
     {
@@ -46,39 +48,57 @@ const all_links = (
             </div>
         ))}
     </nav>
-    )
+)
 
 export default function Sidebar() {
     return (
-        <aside className="w-[250px] hidden md:block border-r border-[#222] bg-[#0b0b0b]">
-            <div className="p-6">
+        <>
+            <Drawer className="p-0  fixed top-0 ">
+                <Button variant="" className="md:hidden mt-3">
+                    <SquareChevronRight />
+                </Button>
+                <Drawer.Backdrop>
+                    <Drawer.Content  placement="left">
+                        <Drawer.Dialog className="p-0 w-[220px]">
+                            <Drawer.CloseTrigger />
+                            <Drawer.Body className={"bg-[#0b0b0b] text-white"}>
+                                {all_links}
+                            </Drawer.Body>
 
-                <h1 className="text-3xl font-bold">HireLoop</h1>
+                        </Drawer.Dialog>
+                    </Drawer.Content>
+                </Drawer.Backdrop>
+            </Drawer>
 
-                <div className="mt-8 flex items-center gap-3">
-                    <img
-                        src="https://i.pravatar.cc/100"
-                        alt=""
-                        className="w-12 h-12 rounded-full"
-                    />
+            <aside className=" md:w-[250px] hidden md:block sticky top-0 border-r border-[#222] bg-[#0b0b0b]">
+                <div className="p-6 ">
+                    <h1 className="text-3xl font-bold">HireLoop</h1>
+                    <div className="mt-8 flex items-center gap-3">
+                        <img
+                            src="https://i.pravatar.cc/100"
+                            alt=""
+                            className="w-12 h-12 rounded-full"
+                        />
 
-                    <div>
-                        <h3 className="text-sm font-medium">
-                            Alex Sterling
-                        </h3>
+                        <div>
+                            <h3 className="text-sm font-medium">
+                                Alex Sterling
+                            </h3>
 
-                        <p className="text-xs text-gray-500">
-                            Recruiter
-                        </p>
+                            <p className="text-xs text-gray-500">
+                                Recruiter
+                            </p>
 
-                        <span className="text-[10px] bg-[#222] px-2 py-1 rounded">
-                            PREMIUM ACCOUNT
-                        </span>
+                            <span className="text-[10px] bg-[#222] px-2 py-1 rounded">
+                                PREMIUM ACCOUNT
+                            </span>
+                        </div>
                     </div>
-                </div>
 
-                {all_links}
-            </div>
-        </aside>
+                    {all_links}
+                </div>
+            </aside>
+        </>
+
     );
 }
