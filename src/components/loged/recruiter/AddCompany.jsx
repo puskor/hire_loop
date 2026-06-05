@@ -29,7 +29,7 @@ export default function AddCompany() {
 
             <CompanyRegisterModal
                 isOpen={open}
-                onClose={() => setOpen(false)}
+                onClose={() => setOpen(false) }
             />
         </>
     );

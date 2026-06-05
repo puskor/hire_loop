@@ -1,234 +1,174 @@
-// "use client";
+"use client";
+import { Rocket } from "@gravity-ui/icons";
+import { Button, Modal } from "@heroui/react";
+import { MapPin, Upload } from "lucide-react";
 
-// import {
-//     Modal,
-//     ModalContent,
-//     Input,
-//     Textarea,
-//     Select,
-//     SelectItem,
-// } from "@heroui/react";
+export default function CompanyRegisterModal({ isOpen, onClose }) {
+    const handleForm = (e) => {
+        e.preventDefault()
+        const formData = new FormData(e.currentTarget)
+        const data = Object.fromEntries(formData.entries())
+        onClose()
+        console.log(data);
+    }
 
-// import {
-//     X,
-//     MapPin,
-//     Upload,
-//     ChevronDown,
-// } from "lucide-react";
-
-// const industries = [
-//     "Technology",
-//     "Fintech",
-//     "Healthcare",
-//     "Education",
-// ];
-
-// const employeeRanges = [
-//     "1-10 employees",
-//     "11-50 employees",
-//     "51-200 employees",
-//     "201-500 employees",
-//     "500+ employees",
-// ];
-
-// export default function CompanyRegisterModal({
-//     isOpen,
-//     onClose,
-// }) {
-//     return (
-//         <Modal
-//             isOpen={isOpen}
-//             onClose={onClose}
-//             size="5xl"
-//             hideCloseButton
-//             classNames={{
-//                 base: "bg-[#111111] border border-[#2a2a2a] text-white",
-//             }}
-//         >
-//             <ModalContent>
-//                 <div>
-
-//                     {/* Header */}
-//                     <div className="px-8 py-7 border-b border-[#2a2a2a] flex justify-between items-start">
-//                         <div>
-//                             <h2 className="text-4xl font-semibold">
-//                                 Register New Company
-//                             </h2>
-
-//                             <p className="text-gray-400 mt-2">
-//                                 Enter your business details to start hiring on HireLoop.
-//                             </p>
-//                         </div>
-
-//                         <button
-//                             onClick={onClose}
-//                             className="text-gray-400 hover:text-white"
-//                         >
-//                             <X size={28} />
-//                         </button>
-//                     </div>
-
-//                     {/* Body */}
-//                     <div className="p-8">
-
-//                         <div className="grid md:grid-cols-2 gap-8">
-
-//                             {/* Company Name */}
-//                             <Input
-//                                 label="Company Name"
-//                                 placeholder="e.g. Acme Corp"
-//                                 variant="bordered"
-//                                 classNames={{
-//                                     inputWrapper:
-//                                         "bg-[#1a1a1a] border-[#2a2a2a]",
-//                                 }}
-//                             />
-
-//                             {/* Industry */}
-//                             <Select
-//                                 label="Industry / Category"
-//                                 placeholder="Technology"
-//                                 selectorIcon={<ChevronDown size={18} />}
-//                                 variant="bordered"
-//                                 classNames={{
-//                                     trigger:
-//                                         "bg-[#1a1a1a] border-[#2a2a2a]",
-//                                 }}
-//                             >
-//                                 {industries.map((item) => (
-//                                     <SelectItem key={item}>
-//                                         {item}
-//                                     </SelectItem>
-//                                 ))}
-//                             </Select>
-
-//                             {/* Website */}
-//                             <Input
-//                                 label="Website URL"
-//                                 placeholder="www.company.com"
-//                                 startContent={
-//                                     <span className="text-gray-500">
-//                                         https://
-//                                     </span>
-//                                 }
-//                                 variant="bordered"
-//                                 classNames={{
-//                                     inputWrapper:
-//                                         "bg-[#1a1a1a] border-[#2a2a2a]",
-//                                 }}
-//                             />
-
-//                             {/* Location */}
-//                             <Input
-//                                 label="Location"
-//                                 placeholder="City, Country"
-//                                 startContent={
-//                                     <MapPin
-//                                         size={18}
-//                                         className="text-gray-500"
-//                                     />
-//                                 }
-//                                 variant="bordered"
-//                                 classNames={{
-//                                     inputWrapper:
-//                                         "bg-[#1a1a1a] border-[#2a2a2a]",
-//                                 }}
-//                             />
-
-//                             {/* Employee Count */}
-//                             <Select
-//                                 label="Employee Count Range"
-//                                 placeholder="1-10 employees"
-//                                 selectorIcon={<ChevronDown size={18} />}
-//                                 variant="bordered"
-//                                 classNames={{
-//                                     trigger:
-//                                         "bg-[#1a1a1a] border-[#2a2a2a]",
-//                                 }}
-//                             >
-//                                 {employeeRanges.map((item) => (
-//                                     <SelectItem key={item}>
-//                                         {item}
-//                                     </SelectItem>
-//                                 ))}
-//                             </Select>
-
-//                             {/* Upload */}
-//                             <div>
-//                                 <label className="block text-sm mb-3">
-//                                     Company Logo
-//                                 </label>
-
-//                                 <div className="flex items-center gap-4">
-//                                     <label className="w-20 h-20 border-2 border-dashed border-[#444] rounded-xl flex items-center justify-center cursor-pointer hover:border-white transition">
-//                                         <Upload size={22} />
-
-//                                         <input
-//                                             type="file"
-//                                             className="hidden"
-//                                             accept="image/*"
-//                                         />
-//                                     </label>
-
-//                                     <div>
-//                                         <p className="font-medium">
-//                                             Upload image
-//                                         </p>
-
-//                                         <p className="text-sm text-gray-500">
-//                                             PNG, JPG up to 5MB
-//                                         </p>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         </div>
-
-//                         {/* Description */}
-//                         <div className="mt-8">
-//                             <Textarea
-//                                 label="Brief Description"
-//                                 placeholder="Tell us about your company's mission and culture..."
-//                                 minRows={6}
-//                                 variant="bordered"
-//                                 classNames={{
-//                                     inputWrapper:
-//                                         "bg-[#1a1a1a] border-[#2a2a2a]",
-//                                 }}
-//                             />
-//                         </div>
-//                     </div>
-
-//                     {/* Footer */}
-//                     <div className="border-t border-[#2a2a2a] p-8 flex justify-end gap-4">
-
-//                         <button
-//                             onClick={onClose}
-//                             className="h-12 px-8 rounded-xl border border-[#2a2a2a]"
-//                         >
-//                             Cancel
-//                         </button>
-
-//                         <button
-//                             className="h-12 px-8 rounded-xl bg-white text-black font-semibold"
-//                         >
-//                             Register Company
-//                         </button>
-
-//                     </div>
-//                 </div>
-//             </ModalContent>
-//         </Modal>
-//     );
-// }
-
-import React from 'react';
-
-const CompanyRegisterModal = () => {
     return (
-        <div>
-            asdc
-        </div>
-    );
-};
+        <Modal isOpen={isOpen} onOpenChange={onClose}>
+            <Modal.Backdrop>
+                <Modal.Container>
+                    <Modal.Dialog className="bg-black border overflow-auto">
+                        <Modal.CloseTrigger />
+                        <Modal.Body>
+                            <form onSubmit={handleForm} className="py-4 px-2 space-y-5">
+                                {/* Two-Column Grid */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-4">
+                                    {/* Company Name */}
+                                    <div className="space-y-2">
+                                        <label className="block text-sm font-medium text-zinc-300">Company Name</label>
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            placeholder="e.g. Acme Corp"
+                                            className="w-full bg-[#1e1e1e] border border-[#262626] rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors"
+                                        />
+                                    </div>
 
-export default CompanyRegisterModal;
+                                    {/* Industry / Category */}
+                                    <div className="space-y-2">
+                                        <label className="block text-sm font-medium text-zinc-300">Industry / Category</label>
+                                        <div className="relative">
+                                            <select
+                                                className="w-full bg-[#1e1e1e] border border-[#262626] rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-500 transition-colors appearance-none cursor-pointer"
+                                                defaultValue="technology"
+                                                name="category"
+                                            >
+                                                <option value="technology">Technology</option>
+                                                <option value="design">Design & Creative</option>
+                                                <option value="finance">Finance & Legal</option>
+                                                <option value="marketing">Marketing & Sales</option>
+                                            </select>
+                                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-zinc-500">
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Website URL */}
+                                    <div className="space-y-2">
+                                        <label className="block text-sm font-medium text-zinc-300">Website URL</label>
+                                        <div className="flex rounded-lg overflow-hidden border border-[#262626]">
+                                            
+                                            <input
+                                                type="text"
+                                                name="web_url"
+                                                placeholder="www.company.com"
+                                                className="w-full bg-[#1e1e1e] px-3.5 py-2.5 text-sm text-white placeholder-zinc-600 focus:outline-none"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Location */}
+                                    <div className="space-y-2">
+                                        <label className="block text-sm font-medium text-zinc-300">Location</label>
+                                        <div className="relative">
+                                            <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                                            <input
+                                                type="text"
+                                                name="location"
+                                                placeholder="City, Country"
+                                                className="w-full bg-[#1e1e1e] border border-[#262626] rounded-lg pl-10 pr-3.5 py-2.5 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Employee Count Range */}
+                                    <div className="space-y-2">
+                                        <label className="block text-sm font-medium text-zinc-300">Employee Count Range</label>
+                                        <div className="relative">
+                                            <select
+                                                name="employee_number"
+                                                className="w-full bg-[#1e1e1e] border border-[#262626] rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-500 transition-colors appearance-none cursor-pointer"
+                                                defaultValue="1-10"
+                                            >
+                                                <option value="1-10">1-10 employees</option>
+                                                <option value="11-50">11-50 employees</option>
+                                                <option value="51-200">51-200 employees</option>
+                                                <option value="201+">201+ employees</option>
+                                            </select>
+                                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-zinc-500">
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Company Logo Dropzone */}
+                                    <div className="space-y-2">
+                                        <label className="block text-sm font-medium text-zinc-300">
+                                            Company Logo
+                                        </label>
+
+                                        <input
+                                            type="file"
+                                            name="logo"
+                                            accept="image/png, image/jpeg"
+                                            className="hidden"
+                                            id="logoUpload"
+                                        />
+
+                                        <label
+                                            htmlFor="logoUpload"
+                                            className="border border-dashed border-[#333] rounded-lg p-3 bg-[#1e1e1e]/40 flex items-center gap-3.5 hover:bg-[#1e1e1e]/80 transition-colors cursor-pointer group"
+                                        >
+                                            <div className="bg-[#1e1e1e] border border-[#333] p-2.5 rounded-lg text-zinc-400 group-hover:text-zinc-200 transition-colors">
+                                                <Upload className="w-4 h-4" />
+                                            </div>
+
+                                            <div>
+                                                <p className="text-sm font-medium text-zinc-200">Upload image</p>
+                                                <p className="text-xs text-zinc-500 mt-0.5">
+                                                    PNG, JPG up to 5MB
+                                                </p>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                                {/* Brief Description */}
+                                <div className="space-y-2">
+                                    <label className="block text-sm font-medium text-zinc-300">Brief Description</label>
+                                    <textarea
+                                        name="description"
+                                        rows={4}
+                                        placeholder="Tell us about your company's mission and culture..."
+                                        className="w-full bg-[#1e1e1e] border border-[#262626] rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors resize-none"
+                                    />
+                                </div>
+
+                                {/* Action Footer Button Container */}
+                                <div className="flex justify-end gap-3 pt-4 border-t border-[#262626]">
+                                    <button
+                                        type="button"
+                                        onClick={onClose}
+                                        className="px-5 py-2.5 rounded-lg border border-[#262626] bg-[#1a1a1a] text-zinc-300 text-sm font-medium hover:bg-[#222] hover:text-white transition-colors"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        slot="close"
+                                        className="px-5 py-2.5 rounded-lg bg-white text-black text-sm font-semibold hover:bg-zinc-200 transition-colors"
+                                    >
+                                        Register Company
+                                    </button>
+                                </div>
+
+                            </form>
+                        </Modal.Body>
+
+                    </Modal.Dialog>
+                </Modal.Container>
+            </Modal.Backdrop>
+        </Modal>
+    );
+}
