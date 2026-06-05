@@ -1,3 +1,4 @@
+import Footer from '@/components/shered/Footer';
 import Navbar from '@/components/shered/Navbar';
 import React from 'react';
 
@@ -6,6 +7,7 @@ const MainLayout = ({children}) => {
         <div>
             <Navbar />
             {children}
+            <Footer/>
         </div>
     );
 };

@@ -13,7 +13,7 @@ export default function Company() {
             employees: "201-500 range",
             website: "https://vercel.com",
             status: "pending",
-            logo: "/vercel.png",
+            logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkAuKrVgOa4BJxUnH4gdJ5TV0m2IFEMjLJ2g&s",
         },
 
         {
@@ -26,7 +26,7 @@ export default function Company() {
             employees: "501-1000 range",
             website: "https://figma.com",
             status: "approved",
-            logo: "/figma.png",
+            logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS62LVhts8-ERiNmlrfHQShVXasUYH38KKSRw&s",
         },
 
         {
@@ -39,7 +39,7 @@ export default function Company() {
             employees: "51-200 range",
             website: "https://enosisbd.com",
             status: "pending",
-            logo: "/enosis.png",
+            logo: "https://www.trgdatacenters.com/wp-content/uploads/2024/02/shutterstock_2182571667-1920x1080.jpg",
         },
     ];
 

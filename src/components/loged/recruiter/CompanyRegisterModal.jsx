@@ -1,15 +1,43 @@
 "use client";
+import { useSession } from "@/lib/auth-client";
 import { Rocket } from "@gravity-ui/icons";
 import { Button, Modal } from "@heroui/react";
 import { MapPin, Upload } from "lucide-react";
+import { useState } from "react";
 
 export default function CompanyRegisterModal({ isOpen, onClose }) {
-    const handleForm = (e) => {
+    const [logoFile, setLogoFile] = useState(null);
+    const { data: session } = useSession()
+    // console.log(session?.user?.id)
+
+    const handleForm = async (e) => {
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
         const data = Object.fromEntries(formData.entries())
-        onClose()
-        console.log(data);
+        const finalData = {
+            ...data,
+            userId: session?.user?.id
+        }
+        // console.log(finalData)
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_AUTH_URL}/company`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(finalData)
+
+        })
+        const resData = await res.json()
+        // console.log(resData, "data");
+
+        if (resData.insertedId) {
+            alert("Company register successfully")
+            onClose()
+        }
+
+
+        // console.log(data);
+
     }
 
     return (
@@ -26,6 +54,7 @@ export default function CompanyRegisterModal({ isOpen, onClose }) {
                                     <div className="space-y-2">
                                         <label className="block text-sm font-medium text-zinc-300">Company Name</label>
                                         <input
+                                            required
                                             type="text"
                                             name="name"
                                             placeholder="e.g. Acme Corp"
@@ -38,6 +67,7 @@ export default function CompanyRegisterModal({ isOpen, onClose }) {
                                         <label className="block text-sm font-medium text-zinc-300">Industry / Category</label>
                                         <div className="relative">
                                             <select
+                                                required
                                                 className="w-full bg-[#1e1e1e] border border-[#262626] rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-500 transition-colors appearance-none cursor-pointer"
                                                 defaultValue="technology"
                                                 name="category"
@@ -57,8 +87,9 @@ export default function CompanyRegisterModal({ isOpen, onClose }) {
                                     <div className="space-y-2">
                                         <label className="block text-sm font-medium text-zinc-300">Website URL</label>
                                         <div className="flex rounded-lg overflow-hidden border border-[#262626]">
-                                            
+
                                             <input
+                                                required
                                                 type="text"
                                                 name="web_url"
                                                 placeholder="www.company.com"
@@ -73,6 +104,7 @@ export default function CompanyRegisterModal({ isOpen, onClose }) {
                                         <div className="relative">
                                             <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
                                             <input
+                                                required
                                                 type="text"
                                                 name="location"
                                                 placeholder="City, Country"
@@ -86,6 +118,7 @@ export default function CompanyRegisterModal({ isOpen, onClose }) {
                                         <label className="block text-sm font-medium text-zinc-300">Employee Count Range</label>
                                         <div className="relative">
                                             <select
+                                                required
                                                 name="employee_number"
                                                 className="w-full bg-[#1e1e1e] border border-[#262626] rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-500 transition-colors appearance-none cursor-pointer"
                                                 defaultValue="1-10"
@@ -108,27 +141,30 @@ export default function CompanyRegisterModal({ isOpen, onClose }) {
                                         </label>
 
                                         <input
+                                            required
                                             type="file"
                                             name="logo"
                                             accept="image/png, image/jpeg"
                                             className="hidden"
                                             id="logoUpload"
+                                            onChange={(e) => setLogoFile(e.target.files[0])}
                                         />
+                                        
 
                                         <label
                                             htmlFor="logoUpload"
                                             className="border border-dashed border-[#333] rounded-lg p-3 bg-[#1e1e1e]/40 flex items-center gap-3.5 hover:bg-[#1e1e1e]/80 transition-colors cursor-pointer group"
                                         >
-                                            <div className="bg-[#1e1e1e] border border-[#333] p-2.5 rounded-lg text-zinc-400 group-hover:text-zinc-200 transition-colors">
-                                                <Upload className="w-4 h-4" />
-                                            </div>
+                                            <div className="flex gap-3">
+                                                <p className="text-sm font-medium text-zinc-200">
+                                                    {logoFile ? logoFile.name : <Upload className="w-4 h-4" />}
+                                                </p>
 
-                                            <div>
-                                                <p className="text-sm font-medium text-zinc-200">Upload image</p>
                                                 <p className="text-xs text-zinc-500 mt-0.5">
-                                                    PNG, JPG up to 5MB
+                                                    {logoFile ? "File selected" : "PNG, JPG up to 5MB"}
                                                 </p>
                                             </div>
+
                                         </label>
                                     </div>
 
