@@ -7,6 +7,7 @@ import {
     SquareChevronRight,
 } from "lucide-react";
 import { Button, Drawer } from "@heroui/react";
+import NavLink from "../shered/NavLinks";
 
 const menuItems = [
     {
@@ -36,7 +37,7 @@ const menuItems = [
 const all_links = (
     <nav className="mt-12">
         {menuItems.map((item, index) => (
-            <div
+            <button
                 key={index}
                 className={`flex items-center gap-4 px-4 py-4 cursor-pointer mb-1 ${item.active
                     ? "bg-[#1c1c1c] border-r-2 border-white"
@@ -45,24 +46,38 @@ const all_links = (
             >
                 <item.icon size={18} />
                 <span>{item.title}</span>
-            </div>
+            </button>
         ))}
+    </nav>
+)
+
+const linkss = (
+
+    <nav className="mt-10">
+        <NavLink href="/dashboard/recruiter" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><LayoutDashboard /> Dashboard</NavLink>
+        <NavLink href="/dashboard/recruiter/company" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><Building2 /> My Company</NavLink>
+        <NavLink href="/dashboard/recruiter/#" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><Briefcase /> Manage Jobs</NavLink>
+        <NavLink href="/dashboard/recruiter/#" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><FileText /> Applications</NavLink>
+        <NavLink href="/dashboard/recruiter/#" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><Settings /> Settings</NavLink>
+
+
+
     </nav>
 )
 
 export default function Sidebar() {
     return (
         <>
-            <Drawer className="p-0  fixed top-0 ">
+            <Drawer className="p-0  fixed top-0">
                 <Button variant="" className="md:hidden mt-3">
                     <SquareChevronRight />
                 </Button>
                 <Drawer.Backdrop>
-                    <Drawer.Content  placement="left">
+                    <Drawer.Content placement="left">
                         <Drawer.Dialog className="p-0 w-[220px]">
                             <Drawer.CloseTrigger />
-                            <Drawer.Body className={"bg-[#0b0b0b] text-white"}>
-                                {all_links}
+                            <Drawer.Body className={"bg-[#0b0b0b] text-white pt-2"}>
+                                {linkss}
                             </Drawer.Body>
 
                         </Drawer.Dialog>
@@ -95,7 +110,7 @@ export default function Sidebar() {
                         </div>
                     </div>
 
-                    {all_links}
+                    {linkss}
                 </div>
             </aside>
         </>

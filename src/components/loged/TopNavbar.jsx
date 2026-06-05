@@ -2,7 +2,7 @@ import { Bell, Search } from "lucide-react";
 
 export default function TopNavbar() {
     return (
-        <header className="md:h-[80px] border-b border-[#222] flex items-center justify-between md:px-8 pt-1 ">
+        <header className="md:h-[80px] border-b border-[#222] flex items-center justify-between pr-3 md:px-8 pt-1 ">
 
             <div className="relative md:w-[700px]">
                 <Search

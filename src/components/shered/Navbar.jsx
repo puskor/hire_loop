@@ -75,9 +75,11 @@ export default function Navbar() {
                     }
 
 
-                    <button className="bg-white text-black px-6 py-3 rounded-2xl font-medium hover:scale-105 transition">
-                        Get Started
-                    </button>
+                    <Link href={"/dashboard"}>
+                        <button className="bg-white text-black px-6 py-3 rounded-2xl font-medium hover:scale-105 transition">
+                            Get Started
+                        </button>
+                    </Link>
                 </div>
 
                 {/* Mobile Button */}
