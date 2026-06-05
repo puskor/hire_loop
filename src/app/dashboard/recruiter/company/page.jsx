@@ -47,7 +47,7 @@ export default function Company() {
         <div className="p-8">
             <AddCompany />
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 pt-6">
                 {companies.map((company, index) => (
                     <CompanyCard
                         key={index}

@@ -24,7 +24,7 @@ export default function CompanyCard({
     status,
 }) {
     return (
-        <div className="bg-[#151515] border border-[#252525] rounded-2xl p-6 flex flex-col">
+        <div className="bg-[#151515] border border-[#252525] rounded-2xl p-6  flex flex-col">
 
             {/* Top */}
             <div className="flex justify-between items-start">
