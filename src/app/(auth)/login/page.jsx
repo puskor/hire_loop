@@ -4,12 +4,15 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { redirect } from "next/navigation";
 import { signIn } from "@/lib/auth-client";
+import { error } from "better-auth/api";
+import toast from "react-hot-toast";
 
 export default function Login() {
 
     const [showPassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState("")
 
-    const handleLogin = async(e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget)
         const user = Object.fromEntries(formData.entries())
@@ -18,23 +21,27 @@ export default function Login() {
         const { data, error } = await signIn.email({
             email: user.email, // required
             password: user.password, // required
-            callbackURL:"/"
+            // callbackURL: "/"
         });
 
-        if(data){
-            // redirect("/")
-            alert("successfully signin")
+        if (data) {
+            toast.success(`${user.name} is successfully login`)
+            redirect("/")
+
         }
-        if(error){
-            alert(`${error}`)
+        if (error) {
+            // console.log(error)
+            // alert(`${error.statusText}`)
+            toast.error(`${error.statusText} `)
+            setErrors(error.statusText)
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-black px-4">
+        <div className="min-h-screen flex items-center justify-center bg-black px-4 overflow-y-auto pt-25">
 
             {/* Card */}
-            <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+            <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 ">
 
                 {/* Title */}
                 <h2 className="text-2xl font-bold text-center text-gray-800">
@@ -82,6 +89,10 @@ export default function Login() {
                             </button>
                         </div>
                     </div>
+                    {
+                        errors && <p className="text-red-400">{errors} , Please Sign up !!!</p>
+                    }
+
 
                     {/* Login Button */}
                     <button

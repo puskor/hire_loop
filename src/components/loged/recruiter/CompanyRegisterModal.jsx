@@ -1,9 +1,11 @@
 "use client";
+import { CreateCompany } from "@/lib/actions/company";
 import { useSession } from "@/lib/auth-client";
 import { Rocket } from "@gravity-ui/icons";
 import { Button, Modal } from "@heroui/react";
 import { MapPin, Upload } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function CompanyRegisterModal({ isOpen, onClose }) {
     const [logoFile, setLogoFile] = useState(null);
@@ -18,20 +20,12 @@ export default function CompanyRegisterModal({ isOpen, onClose }) {
             ...data,
             userId: session?.user?.id
         }
-        // console.log(finalData)
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_AUTH_URL}/company`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(finalData)
 
-        })
-        const resData = await res.json()
-        // console.log(resData, "data");
+        const resData = await CreateCompany(finalData)
+        console.log(resData, "data");
 
         if (resData.insertedId) {
-            alert("Company register successfully")
+            toast.success("Company register successfully")
             onClose()
         }
 
@@ -141,9 +135,9 @@ export default function CompanyRegisterModal({ isOpen, onClose }) {
                                         </label>
 
                                         <input
-                                            required
+                                            // required
                                             type="file"
-                                            name="logo"
+                                            // name="logo"
                                             accept="image/png, image/jpeg"
                                             className="hidden"
                                             id="logoUpload"

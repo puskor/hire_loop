@@ -5,6 +5,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { signUp } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
 import { Description, Label, Radio, RadioGroup } from "@heroui/react";
+import toast from "react-hot-toast";
 
 
 export default function SignUp() {
@@ -33,10 +34,11 @@ export default function SignUp() {
         // console.log(error)
 
         if (data) {
+            toast.success(`${user.name} is successfully resister`)
             redirect("/")
-            alert(`${user.name} is successfully resister`)
         }
         if (error) {
+            toast.error(`${error.statusText}`)
             alert(`${error.statusText}`)
         }
 
@@ -48,7 +50,7 @@ export default function SignUp() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-black px-2">
+        <div className="min-h-screen flex items-center justify-center bg-black px-2 overflow-y-auto pt-25">
             <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
 
                 {/* Title */}
