@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import JobAddModal from "./JobAddModal";
+import JobsCard from "./JobCard";
 // import CompanyRegisterModal from "./CompanyRegisterModal";
 
-export default function AddJobs({resData}) {
+export default function AddJobs({resData,jobsData}) {
 
 
     const [isOpen,onOpenChange] = useState(false)
@@ -29,12 +30,8 @@ export default function AddJobs({resData}) {
                     + Create New Job
                 </button>
             </div>
-{/* 
-            <CompanyRegisterModal
-                isOpen={open}
-                onClose={() => setOpen(false) }
-            /> */}
             <JobAddModal isOpen={isOpen} onOpenChange={onOpenChange} resData={resData}/>
+            <JobsCard jobsData={jobsData}/>
         </>
     );
 }

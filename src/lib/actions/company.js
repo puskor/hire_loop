@@ -1,7 +1,6 @@
 
 'use server'
 
-import { AwardIcon } from "lucide-react"
 
 export const CreateCompany = async (finalData) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_AUTH_URL}/api/company`, {

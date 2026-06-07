@@ -1,9 +1,7 @@
 "use client";
-import { CreateCompany } from "@/lib/actions/company";
+import { CreateJob } from "@/lib/actions/job";
 import { useSession } from "@/lib/auth-client";
-import { Rocket } from "@gravity-ui/icons";
 import { Button, Modal } from "@heroui/react";
-import { MapPin, Upload } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -12,6 +10,7 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
     // console.log(resData)
 
     const [SelectedCompany, setSelectedCompany] = useState("");
+
 
     const handleCompanyChange = (e) => {
         const company = resData.find(
@@ -61,17 +60,24 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
     const [isRemote, setIsRemote] = useState(false);
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries());
 
-        console.log({
+        const finalData = {
             ...data,
             remote: isRemote,
             location: isRemote ? "" : data.location,
             postmanId: session?.user?.id
-        });
+        }
+        const res = await CreateJob(finalData)
+        if (res.insertedId) {
+            toast.success("Job post done")
+            onOpenChange(!isOpen)
+        }
+        // console.log(res,"76,addModal")
+
     };
 
     return (
@@ -136,6 +142,7 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
                                         <div>
                                             <label className="text-sm text-zinc-300">Min</label>
                                             <input
+                                                required
                                                 name="min"
                                                 type="number"
                                                 className="w-full mt-1 bg-[#1e1e1e] border border-[#262626] rounded-lg px-2 py-2 text-white text-sm"
@@ -145,6 +152,7 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
                                         <div>
                                             <label className="text-sm text-zinc-300">Max</label>
                                             <input
+                                                required
                                                 name="max"
                                                 type="number"
                                                 className="w-full mt-1 bg-[#1e1e1e] border border-[#262626] rounded-lg px-2 py-2 text-white text-sm"
@@ -154,6 +162,8 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
                                         <div>
                                             <label className="text-sm text-zinc-300">Currency</label>
                                             <select
+                                                required
+
                                                 name="currency"
                                                 className="w-full mt-1 bg-[#1e1e1e] border border-[#262626] rounded-lg px-2 py-2 text-white text-sm"
                                             >
@@ -168,6 +178,7 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
                                         <label className="text-sm text-zinc-300">Application Deadline</label>
                                         <input
                                             type="date"
+                                            required
                                             name="deadline"
                                             className="w-full  mt-1 bg-[#1e1e1e] border border-[#262626] rounded-lg px-3.5 py-2.5 text-white text-sm"
                                         />
@@ -197,7 +208,7 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
                                         <div className={`space-y-2 ${isRemote && "pointer-events-none"} `}>
                                             {/* <label className="text-sm text-zinc-300">Office Location</label> */}
                                             <input
-
+                                                required
                                                 name="location"
                                                 placeholder="City, Country"
                                                 className={`w-full mt-2 bg-[#1e1e1e] border border-[#262626] rounded-lg px-3.5 py-2.5  text-sm ${isRemote ? "text-black" : "text-white"} `}
@@ -213,6 +224,7 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
                                 <div className="space-y-2">
                                     <label className="text-sm text-zinc-300">Requirements</label>
                                     <textarea
+                                        required
                                         name="requirements"
                                         rows={4}
                                         className="w-full mt-1 bg-[#1e1e1e] border border-[#262626] rounded-lg px-3.5 py-2.5 text-white text-sm"
@@ -223,6 +235,7 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
                                 <div className="space-y-2">
                                     <label className="text-sm text-zinc-300">Benefits</label>
                                     <textarea
+                                        required
                                         name="benefits"
                                         rows={4}
                                         className="w-full mt-1 bg-[#1e1e1e] border border-[#262626] rounded-lg px-3.5 py-2.5 text-white text-sm"

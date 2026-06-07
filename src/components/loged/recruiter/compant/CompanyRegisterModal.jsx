@@ -4,6 +4,8 @@ import { useSession } from "@/lib/auth-client";
 import { Rocket } from "@gravity-ui/icons";
 import { Button, Modal } from "@heroui/react";
 import { MapPin, Upload } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -11,6 +13,7 @@ export default function CompanyRegisterModal({ isOpen, onClose }) {
     const [logoFile, setLogoFile] = useState(null);
     const { data: session } = useSession()
     // console.log(session?.user?.id)
+    const router = useRouter()
 
     const handleForm = async (e) => {
         e.preventDefault()
@@ -18,7 +21,9 @@ export default function CompanyRegisterModal({ isOpen, onClose }) {
         const data = Object.fromEntries(formData.entries())
         const finalData = {
             ...data,
-            userId: session?.user?.id
+            userId: session?.user?.id,
+            status: "pending",
+            logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkAuKrVgOa4BJxUnH4gdJ5TV0m2IFEMjLJ2g&s",
         }
 
         const resData = await CreateCompany(finalData)
@@ -27,6 +32,8 @@ export default function CompanyRegisterModal({ isOpen, onClose }) {
         if (resData.insertedId) {
             toast.success("Company register successfully")
             onClose()
+            router.refresh()
+            
         }
 
 
@@ -38,7 +45,7 @@ export default function CompanyRegisterModal({ isOpen, onClose }) {
         <Modal isOpen={isOpen} onOpenChange={onClose}>
             <Modal.Backdrop>
                 <Modal.Container>
-                    <Modal.Dialog className="bg-black border overflow-auto">
+                    <Modal.Dialog className="bg-black border overflow-auto max-w-[600px] p-8">
                         <Modal.CloseTrigger />
                         <Modal.Body>
                             <form onSubmit={handleForm} className="py-4 px-2 space-y-5">
@@ -143,7 +150,7 @@ export default function CompanyRegisterModal({ isOpen, onClose }) {
                                             id="logoUpload"
                                             onChange={(e) => setLogoFile(e.target.files[0])}
                                         />
-                                        
+
 
                                         <label
                                             htmlFor="logoUpload"

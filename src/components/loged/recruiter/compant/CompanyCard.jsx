@@ -1,36 +1,34 @@
-import {
-    Globe,
-    MapPin,
-    Users,
-    Building2,
-} from "lucide-react";
+"use client";
 
-const statusStyles = {
-    approved:
-        "bg-green-500/10 text-green-400 border border-green-500/20",
+import { Building2, MapPin, Users, Globe } from "lucide-react";
 
-    pending:
-        "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20",
-};
+export default function CompanyCard({ company }) {
 
-export default function CompanyCard({
-    logo,
-    name,
-    industry,
-    description,
-    location,
-    employees,
-    website,
-    status,
-}) 
-{
+
+    const {
+        name,
+        category,
+        description,
+        employee_number,
+        location,
+        logo,
+        status,
+        web_url,
+    } = company;
+
+    const statusStyles = {
+        approved: "bg-green-500/10 text-green-400",
+        pending: "bg-yellow-500/10 text-yellow-400",
+        rejected: "bg-red-500/10 text-red-400",
+    };
+
     return (
-        <div className="bg-[#151515] border border-[#252525] rounded-2xl p-6  flex flex-col">
+        <div className="bg-[#151515] border border-[#252525] rounded-2xl p-6 flex flex-col">
 
             {/* Top */}
             <div className="flex justify-between items-start">
 
-                <div className="flex gap-4">
+                <div className="flex gap-4 max-h-[50px] mb-6">
                     <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden">
                         {logo ? (
                             <img
@@ -39,10 +37,7 @@ export default function CompanyCard({
                                 className="w-full h-full object-cover"
                             />
                         ) : (
-                            <Building2
-                                size={26}
-                                className="text-black"
-                            />
+                            <Building2 size={26} className="text-black" />
                         )}
                     </div>
 
@@ -52,15 +47,13 @@ export default function CompanyCard({
                         </h3>
 
                         <p className="text-gray-400 mt-1">
-                            {industry}
+                            {category}
                         </p>
                     </div>
                 </div>
 
                 <span
-                    className={`px-4 py-1 rounded-full text-xs font-semibold uppercase ${statusStyles[
-                        status?.toLowerCase()
-                    ]
+                    className={`px-4 py-1 rounded-full text-xs font-semibold uppercase ${statusStyles[status?.toLowerCase()]
                         }`}
                 >
                     {status}
@@ -76,25 +69,23 @@ export default function CompanyCard({
             <div className="h-px bg-[#252525] my-8" />
 
             {/* Info */}
-            <div className="flex flex-wrap gap-8 text-gray-300">
 
-                <div className="flex items-center gap-2">
-                    <MapPin size={18} />
-                    <span>{location}</span>
-                </div>
+            <div className="flex items-center gap-2">
+                <MapPin size={18} />
+                <span>{location}</span>
+            </div>
 
-                <div className="flex items-center gap-2">
-                    <Users size={18} />
-                    <span>{employees}</span>
-                </div>
+            <div className="flex items-center gap-2 mt-4">
+                <Users size={18} />
+                <span>{employee_number} Employee</span>
             </div>
 
             {/* Website */}
             <a
-                href={website}
+                href={web_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 flex items-center gap-2 text-white hover:text-gray-300 transition"
+                className="mt-4 flex items-center gap-2 text-white hover:text-gray-300 transition"
             >
                 <Globe size={18} />
                 Visit Website
