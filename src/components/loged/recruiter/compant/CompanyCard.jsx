@@ -22,7 +22,8 @@ export default function CompanyCard({
     employees,
     website,
     status,
-}) {
+}) 
+{
     return (
         <div className="bg-[#151515] border border-[#252525] rounded-2xl p-6  flex flex-col">
 

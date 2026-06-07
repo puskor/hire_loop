@@ -1,5 +1,5 @@
-import AddCompany from "@/components/loged/recruiter/AddCompany";
-import CompanyCard from "@/components/loged/recruiter/CompanyCard";
+import AddCompany from "@/components/loged/recruiter/compant/AddCompany";
+import CompanyCard from "@/components/loged/recruiter/compant/CompanyCard";
 
 export default function Company() {
     const companies = [
