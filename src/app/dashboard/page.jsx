@@ -1,14 +1,18 @@
+import MainLayoutSeeker from '@/components/loged/jobSeeker/MainLayoutSeeker';
 import MainLayoutRec from '@/components/loged/recruiter/MainLayoutRec';
+import getUserSession from '@/lib/core/getUserSession';
 import React from 'react';
 
-const Dashboard = () => {
+const Dashboard = async () => {
+
+    const user = await getUserSession()
+
     return (
         <>
-            <h1 className="text-4xl font-semibold mb-10">
-                Welcome back, Alex Sterling
-            </h1>
+            {
+                user.role === "recruiter" ? <MainLayoutRec /> : <MainLayoutSeeker/>
+            }
 
-            <MainLayoutRec />
         </>
     );
 };

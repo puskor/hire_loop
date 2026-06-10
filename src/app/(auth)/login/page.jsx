@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "@/lib/auth-client";
 import { error } from "better-auth/api";
 import toast from "react-hot-toast";
@@ -11,6 +11,12 @@ export default function Login() {
 
     const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState("")
+
+    const router = useRouter()
+
+    const redirectTo = useSearchParams().get("redirect") || "/"
+
+
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -26,8 +32,7 @@ export default function Login() {
 
         if (data) {
             toast.success(`${user.name} is successfully login`)
-            redirect("/")
-
+            router.push(redirectTo)
         }
         if (error) {
             // console.log(error)
@@ -126,7 +131,7 @@ export default function Login() {
                 <p className="text-center text-sm text-gray-500 mt-6">
                     Don’t have an account?{" "}
                     <a
-                        href="/sign_up"
+                        href={`/sign_up?redirect=${redirectTo}`}
                         className="text-indigo-600 font-medium hover:underline"
                     >
                         Sign up

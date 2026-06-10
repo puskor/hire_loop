@@ -3,14 +3,16 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { signUp } from "@/lib/auth-client";
-import { redirect } from "next/navigation";
 import { Description, Label, Radio, RadioGroup } from "@heroui/react";
 import toast from "react-hot-toast";
+import { useRouter, useSearchParams } from "next/navigation";
 
 
 export default function SignUp() {
     const [showConfirm, setShowConfirm] = useState(false);
     const [error, setError] = useState("");
+    const redirectTo = useSearchParams().get("redirect") || "/"
+    const router = useRouter()
 
     const handleSignup = async (e) => {
         e.preventDefault();
@@ -28,14 +30,14 @@ export default function SignUp() {
             email: user.email, // required
             password: user.password, // required
             image: user.photo,
-            role:user.role
+            role: user.role
         });
 
         // console.log(error)
 
         if (data) {
             toast.success(`${user.name} is successfully resister`)
-            redirect("/")
+            router.push(redirectTo)
         }
         if (error) {
             toast.error(`${error.statusText}`)

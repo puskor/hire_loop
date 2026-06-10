@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 import { Button, Drawer } from "@heroui/react";
 import NavLink from "../shered/NavLinks";
+import getUserSession from "@/lib/core/getUserSession";
+
 
 const menuItems = [
     {
@@ -35,6 +37,7 @@ const menuItems = [
 
 
 const all_links = (
+
     <nav className="mt-12">
         {menuItems.map((item, index) => (
             <button
@@ -53,6 +56,7 @@ const all_links = (
 
 const linkss = (
 
+
     <nav className="mt-10">
         <NavLink href="/dashboard" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><LayoutDashboard /> Dashboard</NavLink>
         <NavLink href="/dashboard/recruiter/company" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><Building2 /> My Company</NavLink>
@@ -62,7 +66,11 @@ const linkss = (
     </nav>
 )
 
-export default function Sidebar() {
+export default async function Sidebar() {
+    const user = await getUserSession()
+
+    console.log(user)
+
     return (
         <>
             <Drawer className="p-0  fixed top-0">
@@ -84,21 +92,21 @@ export default function Sidebar() {
 
             <aside className=" md:w-[250px] hidden md:block sticky top-0 border-r border-[#222] bg-[#0b0b0b]">
                 <div className="p-6 ">
-                    <h1 className="text-3xl font-bold">HireLoop</h1>
+                    <a href="/" className="text-3xl font-bold">HireLoop</a>
                     <div className="mt-8 flex items-center gap-3">
                         <img
-                            src="https://i.pravatar.cc/100"
+                            src={user?.image}
                             alt=""
                             className="w-12 h-12 rounded-full"
                         />
 
                         <div>
                             <h3 className="text-sm font-medium">
-                                Alex Sterling
+                                {user?.name}
                             </h3>
 
                             <p className="text-xs text-gray-500">
-                                Recruiter
+                                {user?.role}
                             </p>
 
                             <span className="text-[10px] bg-[#222] px-2 py-1 rounded">

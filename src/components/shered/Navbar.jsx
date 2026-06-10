@@ -18,6 +18,7 @@ export default function Navbar() {
 
 
 
+
     return (
         <nav className="w-full fixed top-0 left-0 z-50 px-4 md:px-8 py-2 backdrop-blur-3xl bg-black/30">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -75,7 +76,7 @@ export default function Navbar() {
                     }
 
 
-                    <Link href={"/dashboard"}>
+                    <Link href={ session?.user ? `/dashboard` : `/login?redirect=/dashboard`}>
                         <button className="bg-white text-black px-6 py-3 rounded-2xl font-medium hover:scale-105 transition">
                             Get Started
                         </button>
