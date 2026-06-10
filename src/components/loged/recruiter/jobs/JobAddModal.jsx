@@ -2,6 +2,7 @@
 import { CreateJob } from "@/lib/actions/job";
 import { useSession } from "@/lib/auth-client";
 import { Button, Modal } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -11,15 +12,20 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
 
     const [SelectedCompany, setSelectedCompany] = useState("");
 
+    const router = useRouter()
+
 
     const handleCompanyChange = (e) => {
         const company = resData.find(
             (item) => item.name === e.target.value
         );
+        console.log(e.target.value)
         setSelectedCompany(company);
     };
 
+    // console.log(SelectedCompany, "22")
     const category = SelectedCompany?.category
+    // console.log(category, "24")
 
     // console.log(category)
 
@@ -69,14 +75,20 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
             ...data,
             remote: isRemote,
             location: isRemote ? "" : data.location,
-            postmanId: session?.user?.id
+            postmanId: session?.user?.id,
+            logo: SelectedCompany?.logo,
+            companyId: SelectedCompany?._id,
+            create_at : new Date()
         }
+
+        console.log(finalData)
+
         const res = await CreateJob(finalData)
         if (res.insertedId) {
             toast.success("Job post done")
             onOpenChange(!isOpen)
+            router.refresh()
         }
-        // console.log(res,"76,addModal")
 
     };
 
@@ -96,16 +108,17 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
                                     <div className="space-y-2">
                                         <label className="text-sm text-zinc-300">Company Name</label>
                                         <select
+                                            required
                                             onChange={handleCompanyChange}
-                                            name="category"
+                                            name="company"
                                             className="w-full mt-1 bg-[#1e1e1e] border border-[#262626] rounded-lg px-3.5 py-2.5 text-white text-sm"
                                         >
+                                            <option value="" >
+                                                Select Company
+                                            </option>
                                             {
                                                 resData.map((item) => <option key={item._id}>{item.name}</option>)
                                             }
-                                            {/* <option>Frontend</option> */}
-                                            {/* <option>Backend</option>
-                                            <option>Full Stack</option> */}
                                         </select>
                                     </div>
 
@@ -113,15 +126,16 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
                                     <div className="space-y-2">
                                         <label className="text-sm text-zinc-300">Job Category</label>
                                         <select
+                                            required
                                             name="category"
                                             className="w-full mt-1 bg-[#1e1e1e] border border-[#262626] rounded-lg px-3.5 py-2.5 text-white text-sm"
                                         >
+                                            <option value="" >
+                                                Select Category
+                                            </option>
                                             {
                                                 category == "finance" ? finance : category == "technology" ? technology : category == "marketing" ? marketing : category == "design" ? design : finance
                                             }
-                                            {/* <option>Frontend</option>
-                                            <option>Backend</option>
-                                            <option>Full Stack</option> */}
                                         </select>
                                     </div>
 
@@ -144,6 +158,7 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
                                             <input
                                                 required
                                                 name="min"
+                                                min={0}
                                                 type="number"
                                                 className="w-full mt-1 bg-[#1e1e1e] border border-[#262626] rounded-lg px-2 py-2 text-white text-sm"
                                             />
@@ -154,6 +169,7 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
                                             <input
                                                 required
                                                 name="max"
+                                                min={0}
                                                 type="number"
                                                 className="w-full mt-1 bg-[#1e1e1e] border border-[#262626] rounded-lg px-2 py-2 text-white text-sm"
                                             />

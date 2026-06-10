@@ -2,7 +2,7 @@ import { FiSearch, FiMapPin } from "react-icons/fi";
 
 export default function Hero() {
   return (
-    <section className="min-h-screen  bg-black text-white flex flex-col items-center justify-center px-4 relative overflow-hidden">
+    <section className="min-h-screen  bg-black  text-white flex flex-col items-center justify-center px-4 relative overflow-hidden">
 
       {/* Badge */}
       <div className="mb-6 px-4 py-2 rounded-full bg-white/10 border border-white/10 text-sm text-gray-300 flex items-center gap-2">

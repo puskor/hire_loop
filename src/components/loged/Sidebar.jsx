@@ -69,7 +69,6 @@ const linkss = (
 export default async function Sidebar() {
     const user = await getUserSession()
 
-    console.log(user)
 
     return (
         <>
