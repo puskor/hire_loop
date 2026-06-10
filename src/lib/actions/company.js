@@ -16,7 +16,8 @@ export const CreateCompany = async (finalData) => {
 
 
 export const GetCompany = async (user_id) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_AUTH_URL}/api/company?${user_id}`)
+    // console.log(user_id,"199999")
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_AUTH_URL}/api/company?user_id=${user_id}`)
     const data = await res.json()
     return data;
 }

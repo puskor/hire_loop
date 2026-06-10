@@ -1,13 +1,13 @@
 import AddCompany from "@/components/loged/recruiter/compant/AddCompany";
 import CompanyCard from "@/components/loged/recruiter/compant/CompanyCard";
+import { GetCompany } from "@/lib/actions/company";
+import getUserSession from "@/lib/core/getUserSession";
 
 export default async function Company() {
 
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_AUTH_URL}/api/company`)
-    const companyData = await res.json()
-
-
+    const user = await getUserSession()
+    const companyData = await GetCompany(user.id)
 
     return (
         <div className="p-8">

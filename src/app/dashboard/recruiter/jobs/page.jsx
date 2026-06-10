@@ -1,13 +1,16 @@
 import AddJobs from '@/components/loged/recruiter/jobs/AddJobs';
+import { GetCompany } from '@/lib/actions/company';
+import { GetJob } from '@/lib/actions/job';
+import getUserSession from '@/lib/core/getUserSession';
 import React from 'react';
 
 const Jobs = async() => {
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_AUTH_URL}/api/company`)
-    const resData = await res.json()
+    const user =await getUserSession()
 
-    const resJob = await fetch(`${process.env.NEXT_PUBLIC_SERVER_AUTH_URL}/api/jobs`)
-    const jobsData = await resJob.json()
+    // console.log(user)
+    const resData = await GetCompany(user?.id)
+    const jobsData = await GetJob(user?.id)
 
     // console.log(resData);
     return (
