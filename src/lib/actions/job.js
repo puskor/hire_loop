@@ -14,7 +14,8 @@ export const CreateJob = async (finalData) => {
     return data ;
 }
 
-export const GetJob = async()=>{
-    const res =await fetch(`${process.env.NEXT_PUBLIC_SERVER_AUTH_URL}/api/jobs`);
+export const GetJob = async(user_id)=>{
+    const res =await fetch(`${process.env.NEXT_PUBLIC_SERVER_AUTH_URL}/api/jobs?user_id=${user_id}`);
     return await res.json();
 }
+

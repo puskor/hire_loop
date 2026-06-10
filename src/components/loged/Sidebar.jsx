@@ -11,6 +11,7 @@ import NavLink from "../shered/NavLinks";
 import getUserSession from "@/lib/core/getUserSession";
 
 
+
 const menuItems = [
     {
         icon: LayoutDashboard,
@@ -54,13 +55,20 @@ const all_links = (
     </nav>
 )
 
-const linkss = (
-
-
+const requiter_links = (
     <nav className="mt-10">
         <NavLink href="/dashboard" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><LayoutDashboard /> Dashboard</NavLink>
         <NavLink href="/dashboard/recruiter/company" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><Building2 /> My Company</NavLink>
         <NavLink href="/dashboard/recruiter/jobs" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><Briefcase /> Manage Jobs</NavLink>
+        <NavLink href="/dashboard/recruiter/#" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><FileText /> Applications</NavLink>
+        <NavLink href="/dashboard/recruiter/#" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><Settings /> Settings</NavLink>
+    </nav>
+)
+
+const seeker_links = (
+    <nav className="mt-10">
+        <NavLink href="/dashboard" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><LayoutDashboard /> Dashboard</NavLink>
+
         <NavLink href="/dashboard/recruiter/#" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><FileText /> Applications</NavLink>
         <NavLink href="/dashboard/recruiter/#" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><Settings /> Settings</NavLink>
     </nav>
@@ -81,7 +89,7 @@ export default async function Sidebar() {
                         <Drawer.Dialog className="p-0 w-[220px]">
                             <Drawer.CloseTrigger />
                             <Drawer.Body className={"bg-[#0b0b0b] text-white pt-2"}>
-                                {linkss}
+                                {requiter_links}
                             </Drawer.Body>
 
                         </Drawer.Dialog>
@@ -113,8 +121,9 @@ export default async function Sidebar() {
                             </span>
                         </div>
                     </div>
-
-                    {linkss}
+                    {
+                        user.role === "seeker" ?  seeker_links  :  requiter_links 
+                    }
                 </div>
             </aside>
         </>

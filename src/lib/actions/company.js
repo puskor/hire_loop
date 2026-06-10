@@ -11,5 +11,12 @@ export const CreateCompany = async (finalData) => {
         body: JSON.stringify(finalData)
     })
     const data = await res.json()
-    return data ;
+    return data;
+}
+
+
+export const GetCompany = async (user_id) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_AUTH_URL}/api/company?${user_id}`)
+    const data = await res.json()
+    return data;
 }
