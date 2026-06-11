@@ -7,7 +7,6 @@ import { TiThMenuOutline } from "react-icons/ti";
 
 export default function TopNavbar() {
     const router = useRouter()
-
     const {data:session} = useSession()
 
 

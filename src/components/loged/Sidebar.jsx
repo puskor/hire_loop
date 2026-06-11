@@ -68,7 +68,7 @@ const requiter_links = (
 const seeker_links = (
     <nav className="mt-10">
         <NavLink href="/dashboard" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><LayoutDashboard /> Dashboard</NavLink>
-
+        <NavLink href="/dashboard/jobSeeker/apply" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><LayoutDashboard /> Apply</NavLink>
         <NavLink href="/dashboard/recruiter/#" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><FileText /> Applications</NavLink>
         <NavLink href="/dashboard/recruiter/#" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><Settings /> Settings</NavLink>
     </nav>
@@ -122,7 +122,7 @@ export default async function Sidebar() {
                         </div>
                     </div>
                     {
-                        user.role === "seeker" ?  seeker_links  :  requiter_links 
+                        user.role === "seeker" ? seeker_links : requiter_links
                     }
                 </div>
             </aside>

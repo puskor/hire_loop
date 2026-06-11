@@ -16,6 +16,8 @@ export default function CompanyCard({ company }) {
         web_url,
     } = company;
 
+    console.log(logo)
+
     const statusStyles = {
         approved: "bg-green-500/10 text-green-400",
         pending: "bg-yellow-500/10 text-yellow-400",
@@ -29,12 +31,12 @@ export default function CompanyCard({ company }) {
             <div className="flex justify-between items-start">
 
                 <div className="flex gap-4 max-h-[50px] mb-6">
-                    <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden">
+                    <div className="min-w-20 min-h-20 rounded-xl bg-white flex items-center justify-center overflow-hidden">
                         {logo ? (
                             <img
                                 src={logo}
                                 alt={name}
-                                className="w-full h-full object-cover"
+                                className=" items-center object-cover"
                             />
                         ) : (
                             <Building2 size={26} className="text-black" />
@@ -42,7 +44,7 @@ export default function CompanyCard({ company }) {
                     </div>
 
                     <div>
-                        <h3 className="text-3xl font-medium text-white">
+                        <h3 className="text-xl font-medium text-white">
                             {name}
                         </h3>
 

@@ -78,7 +78,7 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
             postmanId: session?.user?.id,
             logo: SelectedCompany?.logo,
             companyId: SelectedCompany?._id,
-            create_at : new Date()
+            create_at: new Date()
         }
 
         console.log(finalData)
@@ -134,7 +134,7 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
                                                 Select Category
                                             </option>
                                             {
-                                                category == "finance" ? finance : category == "technology" ? technology : category == "marketing" ? marketing : category == "design" ? design : finance
+                                                category == "finance" ? finance : category == "technology" ? technology : category == "marketing" ? marketing : category == "design" && design
                                             }
                                         </select>
                                     </div>
@@ -224,7 +224,8 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
                                         <div className={`space-y-2 ${isRemote && "pointer-events-none"} `}>
                                             {/* <label className="text-sm text-zinc-300">Office Location</label> */}
                                             <input
-                                                required
+
+                                                required={!isRemote}
                                                 name="location"
                                                 placeholder="City, Country"
                                                 className={`w-full mt-2 bg-[#1e1e1e] border border-[#262626] rounded-lg px-3.5 py-2.5  text-sm ${isRemote ? "text-black" : "text-white"} `}

@@ -12,6 +12,8 @@ const Jobs = async() => {
     const resData = await GetCompany(user?.id)
     const jobsData = await GetJob(user?.id)
 
+    // console.log(jobsData)
+
     // console.log(resData);
     return (
         <div>
