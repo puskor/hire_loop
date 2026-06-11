@@ -1,6 +1,16 @@
 "use client";
 
+import { jobApply } from "@/lib/actions/seeker/applyJob";
+import { useSession } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
 const JobApplyForm = ({ job }) => {
+
+    const router = useRouter()
+
+    const { data: session } = useSession()
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -8,7 +18,6 @@ const JobApplyForm = ({ job }) => {
         const formData = new FormData(e.target);
         const applicantData = Object.fromEntries(formData.entries());
 
-        // console.log(applicantData);
 
 
         const finalData = {
@@ -16,7 +25,7 @@ const JobApplyForm = ({ job }) => {
             jobId: job._id,
             companyId: job.companyId,
             recruiterId: job.postmanId,
-
+            applierId: session.user.id,
             company: job.company,
             category: job.category,
 
@@ -24,20 +33,16 @@ const JobApplyForm = ({ job }) => {
             status: "Pending",
         };
         console.log(finalData)
+        const res = await jobApply(finalData)
 
-        // API Call Example
-        // await fetch("/api/applications", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         ...applicantData,
-        //         jobId: job?._id,
-        //     }),
-        // });
+        if (res.acknowledged) {
+            console.log(res)
+            toast.success("job apply done")
+            e.target.reset();
+            router.push("/dashboard/jobSeeker/apply")
+        }
+        // console.log(finalData)
 
-        // e.target.reset();
     };
 
     return (

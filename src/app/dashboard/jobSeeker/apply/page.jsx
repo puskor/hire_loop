@@ -1,9 +1,16 @@
+import { jobApplyData } from '@/lib/actions/seeker/applyJob';
+import getUserSession from '@/lib/core/getUserSession';
 import React from 'react';
 
-const AllApply = () => {
+const AllApply = async() => {
+    const user =await getUserSession()
+    const applyData =await jobApplyData(user.id)
     return (
-        <div>
-            here your all job apply
+        <div className='text-white'>
+            data
+            {
+                applyData.map((apply)=><h1 key={apply._id}>1{apply?._id} {apply.jobId}</h1>)
+            }
         </div>
     );
 };
