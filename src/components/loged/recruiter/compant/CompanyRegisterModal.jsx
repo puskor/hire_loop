@@ -23,19 +23,17 @@ export default function CompanyRegisterModal({ isOpen, onClose }) {
             ...data,
             userId: session?.user?.id,
             status: "pending",
-            logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkAuKrVgOa4BJxUnH4gdJ5TV0m2IFEMjLJ2g&s",
+            // logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkAuKrVgOa4BJxUnH4gdJ5TV0m2IFEMjLJ2g&s",
         }
 
         const resData = await CreateCompany(finalData)
-        console.log(resData, "data");
+        // console.log(resData, "data");
 
         if (resData.insertedId) {
             toast.success("Company register successfully")
             onClose()
             router.refresh()
-            
         }
-
 
         // console.log(data);
 

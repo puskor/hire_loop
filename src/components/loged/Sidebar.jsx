@@ -26,12 +26,14 @@ const seeker_links = (
         <NavLink href="/dashboard" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><LayoutDashboard /> Dashboard</NavLink>
         <NavLink href="/dashboard/jobSeeker/jobApply" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><FileText /> Find job</NavLink>
         <NavLink href="/dashboard/jobSeeker/apply" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><FileText /> Applications</NavLink>
-        <NavLink href="/dashboard/recruiter/#" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><Settings /> Settings</NavLink>
+        <NavLink href="/dashboard/jobSeeker/#" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><Settings /> Settings</NavLink>
     </nav>
 )
 
 export default async function Sidebar() {
     const user = await getUserSession()
+
+    const links = user.role === "seeker" ? seeker_links : requiter_links
 
     return (
         <>
@@ -45,7 +47,8 @@ export default async function Sidebar() {
                             <Drawer.CloseTrigger />
                             <Drawer.Body className={"bg-[#0b0b0b] text-white pt-2"}>
                                 {
-                                    user.role === "seeker" ? seeker_links : requiter_links
+                                    // user.role === "seeker" ? seeker_links : requiter_links
+                                    links
                                 }
                             </Drawer.Body>
 
@@ -79,7 +82,8 @@ export default async function Sidebar() {
                         </div>
                     </div>
                     {
-                        user.role === "seeker" ? seeker_links : requiter_links
+                        // user.role === "seeker" ? seeker_links : requiter_links
+                        links
                     }
                 </div>
             </aside>

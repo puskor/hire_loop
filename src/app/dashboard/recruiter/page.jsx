@@ -10,7 +10,7 @@ const Recruiter = () => {
             </h1>
 
            <MainLayoutRec/>
-        </>
+        </> 
     );
 };
 

@@ -12,6 +12,10 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
 
     const [SelectedCompany, setSelectedCompany] = useState("");
 
+    // console.log(SelectedCompany?.status)
+
+    const status = SelectedCompany?.status;
+
     const router = useRouter()
 
 
@@ -19,7 +23,7 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
         const company = resData.find(
             (item) => item.name === e.target.value
         );
-        console.log(e.target.value)
+        // console.log(e.target.value)
         setSelectedCompany(company);
     };
 
@@ -120,12 +124,14 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
                                                 resData.map((item) => <option key={item._id}>{item.name}</option>)
                                             }
                                         </select>
+                                        {status === "pending" && <h1 className="text-red-500">This company is not approved</h1>}
                                     </div>
 
                                     {/* Category */}
                                     <div className="space-y-2">
                                         <label className="text-sm text-zinc-300">Job Category</label>
                                         <select
+
                                             required
                                             name="category"
                                             className="w-full mt-1 bg-[#1e1e1e] border border-[#262626] rounded-lg px-3.5 py-2.5 text-white text-sm"
@@ -272,9 +278,15 @@ export default function JobAddModal({ isOpen, onOpenChange, resData }) {
 
                                     <button
                                         type="submit"
-                                        className="px-5 py-2.5 rounded-lg bg-white text-black text-sm font-semibold"
+                                        disabled={status === "pending"}
+                                        className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200
+                                                 ${status === "pending"
+                                                ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                                                : "bg-white text-black hover:bg-gray-200 active:scale-95"
+                                            }
+                                            `}
                                     >
-                                        Publish Job
+                                        {status === "pending" ? "Publishing..." : "Publish Job"}
                                     </button>
                                 </div>
 
