@@ -11,50 +11,6 @@ import NavLink from "../shered/NavLinks";
 import getUserSession from "@/lib/core/getUserSession";
 
 
-
-const menuItems = [
-    {
-        icon: LayoutDashboard,
-        title: "Dashboard",
-        active: true,
-    },
-    {
-        icon: Building2,
-        title: "My Company",
-    },
-    {
-        icon: Briefcase,
-        title: "Manage Jobs",
-    },
-    {
-        icon: FileText,
-        title: "Applications",
-    },
-    {
-        icon: Settings,
-        title: "Settings",
-    },
-];
-
-
-const all_links = (
-
-    <nav className="mt-12">
-        {menuItems.map((item, index) => (
-            <button
-                key={index}
-                className={`flex items-center gap-4 px-4 py-4 cursor-pointer mb-1 ${item.active
-                    ? "bg-[#1c1c1c] border-r-2 border-white"
-                    : "text-gray-400"
-                    }`}
-            >
-                <item.icon size={18} />
-                <span>{item.title}</span>
-            </button>
-        ))}
-    </nav>
-)
-
 const requiter_links = (
     <nav className="mt-10">
         <NavLink href="/dashboard" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><LayoutDashboard /> Dashboard</NavLink>
@@ -68,8 +24,8 @@ const requiter_links = (
 const seeker_links = (
     <nav className="mt-10">
         <NavLink href="/dashboard" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><LayoutDashboard /> Dashboard</NavLink>
-        <NavLink href="/dashboard/jobSeeker/apply" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><LayoutDashboard /> Apply</NavLink>
-        <NavLink href="/dashboard/recruiter/#" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><FileText /> Applications</NavLink>
+        <NavLink href="/dashboard/jobSeeker/jobApply" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><FileText /> Find job</NavLink>
+        <NavLink href="/dashboard/jobSeeker/apply" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><FileText /> Applications</NavLink>
         <NavLink href="/dashboard/recruiter/#" className="flex items-center gap-4 px-4 py-2 cursor-pointer  text-gray-400 border-y border-gray-600"><Settings /> Settings</NavLink>
     </nav>
 )
@@ -77,19 +33,20 @@ const seeker_links = (
 export default async function Sidebar() {
     const user = await getUserSession()
 
-
     return (
         <>
             <Drawer className="p-0  fixed top-0">
                 <Button variant="" className="md:hidden mt-3">
                     <SquareChevronRight />
                 </Button>
-                <Drawer.Backdrop>
+                <Drawer.Backdrop className={"md:hidden"}>
                     <Drawer.Content placement="left">
                         <Drawer.Dialog className="p-0 w-[220px]">
                             <Drawer.CloseTrigger />
                             <Drawer.Body className={"bg-[#0b0b0b] text-white pt-2"}>
-                                {requiter_links}
+                                {
+                                    user.role === "seeker" ? seeker_links : requiter_links
+                                }
                             </Drawer.Body>
 
                         </Drawer.Dialog>

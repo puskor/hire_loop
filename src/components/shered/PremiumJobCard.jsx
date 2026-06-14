@@ -45,7 +45,7 @@ export default function PremiumJobCard({ job }) {
                     <div className="flex items-center gap-3">
                         <div className="w-14 h-14 rounded-xl overflow-hidden bg-white flex items-center justify-center">
                             <img
-                                src={job.logo}
+                                src={job?.logo}
                                 alt={job.company}
                                 className="w-14 h-14 object-cover"
                             />
